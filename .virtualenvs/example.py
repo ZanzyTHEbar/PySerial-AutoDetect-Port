@@ -13,4 +13,5 @@ if __name__ == '__main__':
     autoconnect = AutoDetectSerialPort("dev/ttyUSB0", 1)
     autoconnect.begin()
     
+    # Access the Serial object
     print(autoconnect.serial)

@@ -18,7 +18,7 @@ class AutoDetectSerialPort:
             self.connect_to_serial(self.port)
 
     def print_port_details(self):
-        ports = serial.tools.list_ports.comports()
+        ports = self.serial.tools.list_ports.comports()
 
         for port, desc, hwid in sorted(ports):
             print("{}: {} [{}]".format(port, desc, hwid))
@@ -28,7 +28,7 @@ class AutoDetectSerialPort:
     def serial_ports_auto(self):
         
         try:
-            ports = serial.tools.list_ports.comports()
+            ports = self.serial.tools.list_ports.comports()
             
         except EnvironmentError:
             
