@@ -8,19 +8,20 @@ This library uses a virtual environment, to keep the main OS unpolluted
 
 To setup the dev environment follow these steps. 
 
-  python -m pip install virtualenv
+    python -m pip install virtualenv
   
-  cd .virtualenv
+    cd .virtualenv
   
-  python -m virtualenv venv
+    python -m virtualenv venv
 
 For windows users
 
-  venv\Scripts\activate 
+    venv\Scripts\activate 
   
 For linux users
-  source venv\Scripts\activate
+
+    source venv\Scripts\activate
   
 Install the pyserial library
 
-  pip install pyserial
+    pip install pyserial
