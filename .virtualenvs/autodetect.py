@@ -8,7 +8,7 @@ class AutoDetectSerialPort:
     def __init__(self, port = 0, force = 0):
         self.port = port
         self.force = force
-        self.serial = None
+        self.serial = serial
         
         
     def begin(self):
@@ -35,7 +35,7 @@ class AutoDetectSerialPort:
             print('Error: could not find any ports using built-in serial module')
             print('Using manual sorting method')
             if sys.platform.startswith('win'):
-                ports = ['COM%s' % (i + 1) for i in range(256)]
+                ports = ['COM%s' % (i + 1) for i in range(2, 256)]
             elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
                 # this excludes your current terminal "/dev/tty"
                     ports = glob.glob('/dev/ttyUSB[0-100]*')
@@ -46,17 +46,16 @@ class AutoDetectSerialPort:
         
         result = []
         for port in ports:
-            print("Found port " + port.device)
+            tmpPort = port.device or port
+            print("Found port ", tmpPort)
             try:
-                ser = serial.Serial(port)
+                ser = self.serial.Serial(tmpPort)
                 if ser.isOpen():
                     ser.close()
-
-                ser.flushInput()
-                ser.flushOutput()
+                    
                 result.append(port)
             except (OSError, serial.SerialException):
-                print("Failed to connect to port " + port.device)
+                print("Failed to connect to port ", tmpPort)
                 continue
         return result
 
@@ -65,14 +64,8 @@ class AutoDetectSerialPort:
         for port in ports:
             print("Attempting connection to port", port)
             try:
-                ser = serial.Serial(port, baudrate=9600, timeout=1)
-                if ser.isOpen():
-                    ser.close()
-
-                ser.flushInput()
-                ser.flushOutput()
-                print("Connecting to " + ser.name)
-                self.serial = ser
+                ser = self.serial.Serial(port, baudrate=9600, timeout=1)
+                print("Connecting to ", ser.name)
             except:
                 print("Failed to connect to port", port)
                 continue
