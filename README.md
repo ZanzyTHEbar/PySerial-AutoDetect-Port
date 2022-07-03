@@ -1,6 +1,6 @@
 # PySerial-AutoDetect-Port
 
-This is a very basic library (with an example) that allows for autodection and connection to your Serial Port
+This is a very basic library (with an example) that allows for autodetection and connection to your Serial Port
 
 # How to Use
 
