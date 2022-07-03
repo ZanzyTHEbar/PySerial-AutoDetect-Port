@@ -5,18 +5,13 @@ import glob
 
 class AutoDetectSerialPort:
     
+    
     def __init__(self, port = 0, force = 0):
         self.port = port
         self.force = force
         self.serial = serial
         
         
-    def begin(self):
-        if (self.force == 0):
-            self.connect_to_serial(*self.serial_ports_auto())
-        else:
-            self.connect_to_serial(self.port)
-
     def print_port_details(self):
         ports = self.serial.tools.list_ports.comports()
 
@@ -24,8 +19,16 @@ class AutoDetectSerialPort:
             print("{}: {} [{}]".format(port, desc, hwid))
             
         return ports
+    
+        
+    def begin(self):
+        if (self.force == 0):
+            self._connect_to_serial(*self._serial_ports_auto())
+        else:
+            self._connect_to_serial(self.port)
 
-    def serial_ports_auto(self):
+
+    def _serial_ports_auto(self):
         
         try:
             ports = self.serial.tools.list_ports.comports()
@@ -59,7 +62,7 @@ class AutoDetectSerialPort:
                 continue
         return result
 
-    def connect_to_serial(self, *ports):
+    def _connect_to_serial(self, *ports):
         print("Beginning Connection Handshake...")
         for port in ports:
             print("Attempting connection to port", port)
